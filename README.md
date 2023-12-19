@@ -1,42 +1,25 @@
-# ProjectTemplate
-
-## Explanations and Instructions
-
-This repository contains the files needed to initialize a project for your [DataScientest](https://datascientest.com/) training.
-
-It contains mainly the present README.md file and an application template [Streamlit](https://streamlit.io/).
-
-**README**
-
-The README.md file is a central element of any git repository. It allows you to present your project, its objectives, and to explain how to install and launch the project, or even how to contribute to it.
-
-You will have to modify different sections of this README.md to include the necessary informations.
-
-- Complete the sections (`## Presentation and Installation` `## Streamlit App`) following the instructions in these sections.
-- Delete this section (`## Explanations and Instructions`)
-
-**Streamlit Application**
-
-A [Streamlit] application template (https://streamlit.io/) is available in the [streamlit_app](streamlit_app) folder. You can use this template to start with your project.
+# Rakuten France Multimodal Product Data Classification
 
 ## Presentation and Installation
 
-Complete this section with a brief description of your project, the context (including a link to the DataScientest course), and the objectives.
+This repository contains the code for our project **Rakuten product classification**, developed during our [Data Scientist training](https://datascientest.com/en/data-scientist-course) at [DataScientest](https://datascientest.com/).
 
-You can also add a brief presentation of the team members with links to your respective networks (GitHub and/or LinkedIn for example).
+The project is issued from the Rakuten France Multimodal Product Data Classification challenge. Datas and their descriptions are available publicly here : https://challengedata.ens.fr/challenges/35
 
-**Example:**
-
-This repository contains the code for our project **PROJECT_NAME**, developed during our [Data Scientist training](https://datascientest.com/en/data-scientist-course) at [DataScientest](https://datascientest.com/).
-
-The goal of this project is to **...**
+The goal of the project is to classify products based on a some text and an image describing the product.
 
 This project was developed by the following team :
 
-- John Doe ([GitHub](https://github.com/) / [LinkedIn](http://linkedin.com/))
-- Martin Dupont ([GitHub](https://github.com/) / [LinkedIn](http://linkedin.com/))
+- Julien Noel du Payrat ([GitHub](https://github.com/surfncode) / [LinkedIn](https://www.linkedin.com/in/julien-noel-du-payrat-01854558))
+- Karim Hadjar
+- Mathis Poignet
 
 You can browse and run the [notebooks](./notebooks). 
+The notebooks are meant to be run on [google colab](https://colab.research.google.com/). You need a google drive hosting the data. Please download the following zip, and extract it in a folder named **Projet_Rakuten** at the root of your drive: (TODO: link to zip containing the data)
+
+TODO: see how to give the choice of running the notebooks locally.
+
+TODO: complete the next sections
 
 You will need to install the dependencies (in a dedicated environment) :
 
