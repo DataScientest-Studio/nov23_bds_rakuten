@@ -21,7 +21,7 @@ We have organized the git repository as follows:
 - **data:** Contains the provided data CSVs. We didn't add the images to git, as the folder was too large. However, a zip file is publicly accessible on Google Drive: [images.zip](https://drive.google.com/file/d/1Qi_gEQet9Yls5vKGr5erRqspjpno3c0B/view?usp=drive_link).
 - **notebooks:** Contains the notebooks to be executed in the listed order. Indeed, most notebooks produce results that other notebooks rely on.
     - **data-exploration:** Data exploration and visualization.
-    - **traduction_fr:** French text translation.
+    - **data_preprocessing_traduction_fr:** French text translation.
     - **data_preprocessing_images:** Image zooming.
     - **data_preprocessing_resampling:** Class rebalancing.
     - **Data-preprocessing-text-stopWord-Steming:** Stop words filtering, text tokenization, and lemmatization.
