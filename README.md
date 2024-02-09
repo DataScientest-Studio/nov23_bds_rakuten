@@ -18,7 +18,7 @@ This project was developed by the following team :
 
 We have organized the git repository as follows:
 
-- **data:** Contains the provided data CSVs. We didn't add the images to git, as the folder was too large. However, a zip file is publicly accessible on Google Drive: images.zip.
+- **data:** Contains the provided data CSVs. We didn't add the images to git, as the folder was too large. However, a zip file is publicly accessible on Google Drive: [images.zip](https://drive.google.com/file/d/1Qi_gEQet9Yls5vKGr5erRqspjpno3c0B/view?usp=drive_link).
 - **notebooks:** Contains the notebooks to be executed in the listed order. Indeed, most notebooks produce results that other notebooks rely on.
     - **data-exploration:** Data exploration and visualization.
     - **traduction_fr:** French text translation.
@@ -54,7 +54,6 @@ You're all set up. You should now be able to open the notebooks from **nov23_bds
 
 ### Running locally
 
-Install the requirements
 
 1. The images were not stored on git due to space limitations. You must download them from our google drive via this link: [images.zip](https://drive.google.com/file/d/1Qi_gEQet9Yls5vKGr5erRqspjpno3c0B/view?usp=drive_link)
 2. You need to copy **images.zip** into **nov23_bds_rakuten/data** on your computer
