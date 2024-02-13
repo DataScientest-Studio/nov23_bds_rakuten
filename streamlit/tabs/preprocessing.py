@@ -33,16 +33,10 @@ def renderPreprocessing():
             tile.markdown(texte[i])
 
     if selected3=='Images':
-        st.header('Préparation des images')
-        row1 = st.columns(3)
-        row2 = st.columns(2)
-
-        texte = ["""Merge des colonnes productid et imageid pour avoir les noms de fichiers""",
-            """Répartition dans des sous dossiers selon leurs classes""",
-            """Zoom sur les images""",
-            """Équilibrage des classes""",
-            """Export des données preprossed"""]
-        
-        for i, col in enumerate(row1 + row2):
-            tile = col.container(height=120)
-            tile.markdown(texte[i])
+        st.header('Preprocessing des images')
+        st.markdown("""
+            - Déplacement de chaque image dans un sous-dossier propre à sa classe d'appartenance
+            - Ajout d'une colonne imagefile au Dataframe contenant leur chemin relatif
+            - Zoom des images centrales ayant un ratio inférieur ou égal à 80%
+        """)
+        st.image("assets/zoom_images.png")
