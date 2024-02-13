@@ -78,8 +78,24 @@ prdcodetype2label = {
 
 #Options Menu
 with st.sidebar:
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image('assets/rakuten.png', width=140)
+    hide_img_fs = '''
+    <style>
+    /*button[title="View fullscreen"]{
+        visibility: hidden;}*/
+    .st-emotion-cache-eczf16 {display: none}
+    [data-testid='stSidebarUserContent']{
+        padding: 4rem 1.5rem 2rem 1.5rem
+    }
+    </style>
+    '''
+    st.markdown(hide_img_fs, unsafe_allow_html=True)
+
     selected = option_menu('Projet Rakuten', ["Introduction", "Exploration", "Preprocessing", "Modélisation", "Démonstration", "Conclusion", "À propos"], 
         icons=['play-btn','bar-chart','gear', 'diagram-3', 'play', 'activity', 'info-circle'],menu_icon='collection-play', default_index=0, key='main')
+    
     lottie = load_lottiefile('assets/process.json')
     st_lottie(lottie,key='sidebar', width=250)
 
@@ -121,6 +137,7 @@ if selected=="Introduction":
 if selected=="Exploration":
 
     st.title('Exploration du jeu de données')
+    st.divider()
 
     selected2 = option_menu(None, ["Données brutes", "Texte", 'Images'], 
         icons=['database', 'chat-text', "images"], 
@@ -239,6 +256,7 @@ if selected=="Exploration":
 # Preprocessing
 if selected=='Preprocessing':
     st.title('Démarche de préprocessing')
+    st.divider()
 
     selected3 = option_menu(None, ["Texte", 'Images'], 
         icons=['chat-text', "images"], 
@@ -285,23 +303,69 @@ if selected=='Preprocessing':
 # Modélisation
 if selected=='Modélisation':
     st.title('Modélisation')
-    option = st.selectbox(
-        'Choisir quel modèle utiliser : ',
-        ('Texte', 'Image', 'Fusion'),
-        label_visibility='collapsed')
+    st.divider()
 
+    option = option_menu(None, ["Texte", 'Image (ResNet152)', 'Image (VGG16)', 'Fusion'], 
+        icons=['chat-text', "images", "images", "file-richtext"], 
+        menu_icon="cast", default_index=0, orientation="horizontal")
+    
+    if option == 'Texte':
+        st.header('Modèle de texte CamenBERT')
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.subheader('Rapport de classification')
+            st.image('assets/cf_resnet.png', width=400)
+        with col2:
+            st.subheader('Matrice de confusion')
+            st.image('assets/heatmap_resnet.png')
+    if option == 'Image (ResNet152)':
+        st.header('Modèle d\'image ResNet152')
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.subheader('Rapport de classification')
+            st.image('assets/cf_resnet.png', width=400)
+        with col2:
+            st.subheader('Matrice de confusion')
+            st.image('assets/heatmap_resnet.png')
+    if option == 'Image (VGG16)':
+        st.header('Modèle d\'image VGG16')
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.subheader('Rapport de classification')
+            st.image('assets/cf_vgg16.png', width=400)
+        with col2:
+            st.subheader('Matrice de confusion')
+            st.image('assets/heatmap_resnet.png')
+    if option == 'Fusion':
+        st.header('Modèle de fusion Voting Classifier')
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.subheader('Rapport de classification')
+            st.image('assets/cf_resnet.png', width=400)
+        with col2:
+            st.subheader('Matrice de confusion')
+            st.image('assets/heatmap_resnet.png')
 if selected=='Démonstration':
+    st.title('Démonstration')
+    st.divider()
+
+    option = option_menu(None, ['Texte', 'Images', 'Fusion'], 
+        icons=['chat-text', "images", "file-richtext"], 
+        menu_icon="cast", default_index=0, orientation="horizontal")
+    
     with st.container():
         col1,col2=st.columns([2, 5])
-        with col1:
-            option = st.selectbox(
-                    'Choisir quel modèle utiliser : ',
-                    ('Texte', 'Images', 'Fusion'),
-                    label_visibility='collapsed'
-                )
-            
+        with col1:            
             with st.form('predict_form', clear_on_submit=True):
-
+                option1 = st.selectbox(
+                        'Modèle texte : ',
+                        ('CamenBERT', 'textv2')
+                    )
+                option2 = st.selectbox(
+                        'Modèle image : ',
+                        ('VGG16', 'Resnet152')
+                    )
+            
                 if option in ['Texte', 'Fusion']:
                     designation = st.text_input(
                         "Désignation",
@@ -311,6 +375,9 @@ if selected=='Démonstration':
                         "Description",
                         placeholder = "Description du produit"
                     )
+
+                if option == 'Fusion':
+                    st.text_input("Rakuten URL", placeholder = 'Lien vers produit Rakuten')
 
                 if option in ['Images', 'Fusion']:
                     uploaded_file = st.file_uploader("Importer une image", type=['png', 'jpg'])
@@ -335,8 +402,6 @@ if selected=='Démonstration':
 
                 class_predictions = list(zip(predictions, prdcodetype2label.values()))
 
-                print(class_predictions)
-
                 # Trier les prédictions par probabilité (du plus élevé au plus bas)
                 sorted_predictions = sorted(class_predictions, key=lambda x: x[0], reverse=True)
 
@@ -346,27 +411,34 @@ if selected=='Démonstration':
                 # Extraire les noms de classe et les probabilités
                 top_class_names, top_probabilities = zip(*top_5_predictions)
 
-                print(top_class_names, top_probabilities, sorted_predictions)
-
                 fig, ax = plt.subplots(figsize=(15, 4))
                 ax.bar(class_names, predictions)
                 ax.set_title('Prédictions par catégorie', fontsize=16)
                 ax.set_ylabel('Probabilités', fontsize=14)
                 plt.xticks(rotation=90)
                 st.pyplot(fig)
+
+                final_prediction = sorted_predictions[0]
+                st.subheader('Prédiction finale:' + final_prediction[1])
             else:
-                c1, c2, c3 = st.columns([1, 2, 1])
+                c1, c2, c3 = st.columns([1, 5, 1])
                 with c2:
                     lottie = load_lottiefile('assets/dashboard.json')
-                    st_lottie(lottie,key='demo', width=500)
+                    st_lottie(lottie,key='demo', width=600)
 
 
 # Conclusion
 if selected=="Conclusion":
     st.title('Conclusion')
-    st.header('Bilan du projet')
-    st.header('Difficultées rencontrées')
-    st.header('Axes d\'amélioration')
+    st.divider()
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.header('Bilan du projet')
+    with col2:
+        st.header('Difficultées rencontrées')
+    with col3:
+        st.header('Axes d\'amélioration')
 
 # A propos
 if selected=="À propos":
