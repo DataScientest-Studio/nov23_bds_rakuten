@@ -52,9 +52,8 @@ def renderIntroduction():
             st.header('Karim Hadjar')
             st.markdown(
                 """
-                - Expérience dans la création de tableaux de bord et l'utilisation d'outils (ex: Excel, Power BI)
-                - Approche empirique privilégiée pour l'exploration des données et la sélection des visualisations..
-
+                - Expérience dans la création de tableaux de bord et l'utilisation d'outils (ex: Excel, Power BI, ETL)
+                - Jusqu'ici, approche empirique pour l'exploration des données et la sélection des visualisations.
                 - [Linkedin](https://www.linkedin.com/in/karim-hadjar-52059b268/)
                 """
                 )

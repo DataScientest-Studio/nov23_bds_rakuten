@@ -10,14 +10,107 @@ def renderModelisation():
         menu_icon="cast", default_index=0, orientation="horizontal")
     
     if option == 'Texte':
-        st.header('Modèle de texte CamenBERT')
-        col1, col2 = st.columns([2, 3])
-        with col1:
-            st.subheader('Rapport de classification')
-            st.image('assets/cf_resnet.png', width=400)
-        with col2:
-            st.subheader('Matrice de confusion')
-            st.image('assets/heatmap_resnet.png')
+        st.header('Modèle de classification de texte')
+        st.markdown("Etude en 3 phases")
+        with st.expander('Phase 1 : Modèles Classiques'):
+            st.header('Modèles Classiques')
+            st.markdown("""
+            Application de techniques statistiques et d'apprentissage machine traditionnel pour la 
+            classification de texte, avec une préparation spécifique du texte.
+
+            1. Préparation du Texte
+                - Traduction
+                - Filtrage stop Words
+                - WordNetLemmatizer
+                - TF-IDF
+     
+            2. Modèles testés : 
+                - Random Forest
+                - Gradient Boosting
+                - SVM
+            3. Performance 
+                Accuracy: Varie de 0,3 à 0,81
+            """)
+
+            st.subheader("Conclusion")
+            st.markdown("""
+            Importance du préprocessing et des paramètres d'entrainement sur les résultats
+            Meilleur score obtenu avec SVM et Filtrage stop words + WordNetLemmatizer + TF-IDF
+            """)
+            col1, col2 = st.columns([2, 3])
+            with col1:
+                st.subheader('Rapport de classification')
+                st.image('assets/cf-svm-10.png', width=400)
+            with col2:
+                st.subheader('Matrice de confusion')
+                st.image('assets/confusion-matrix-svm-10.png', width=600)
+            
+        with st.expander('Phase 2 : Réseau de Neurones'):
+            st.header('Réseau de Neurones')
+            st.markdown("""
+            Utilisation de réseaux de neurones pour traiter des tâches de NLP,
+            pour capturer des relations complexes dans les données textuelles.
+
+            1. Préparation du Texte
+                - Traduction
+                - Filtrage stop Words
+                - WordNetLemmatizer
+                - CBOW
+                - Skip Gram
+                - Tokenisé + padding
+     
+            2. Modèles testés : 
+                - RNN avec GRU
+                - FastText (Hybride classique / RNN)
+
+            3. Performance 
+                - Accuracy: Autour de 0,7 à 0,74 pour RNN GRU
+                - Accuracy: Varie de 0,47 à 0,8 pour FastText
+            """)
+
+            st.subheader("Conclusion")
+            st.markdown("""
+            Approche FastText extrèmement efficace en terme de rapidité et de résultat. Beaucoup de paramètres à maîtriser pour 
+            optimiser
+            """)
+            col1, col2 = st.columns([2, 3])
+            with col1:
+                st.subheader('Rapport de classification')
+                st.image('assets/cf-FastText-21.png', width=400)
+            with col2:
+                st.subheader('Matrice de confusion')
+                st.image('assets/confusion-matrix-FastText-21.png', width=600)
+             
+        with st.expander('Phase 3 : Transfert Learning'):
+            st.header('Transfert Learning')
+            st.markdown("""
+            Utilisation de modèles pré-entraînés adaptés à de nouvelles tâches, 
+            permettant d'exploiter des connaissances linguistiques complexes acquises sur de vastes corpus.
+
+            1. Préparation du Texte
+                - Traduction
+                - Tokeniser / encoder avec CamemBERT
+     
+            2. Modèles testés : 
+                - CamemBERT
+
+            3. Performance 
+                - Accuracy: Jusqu'à 0,89
+            """)
+
+            st.subheader("Conclusion")
+            st.markdown("""
+            L'utilisation de transfert learning permet d'obtenir des résultats significativement meilleurs, 
+            malgrès le peu d'ajustements sur les paramètres d'entraînement.
+            """)
+            col1, col2 = st.columns([2, 3])
+            with col1:
+                st.subheader('Rapport de classification')
+                st.image('assets/cf-CamemBERT-28.png', width=400)
+            with col2:
+                st.subheader('Matrice de confusion')
+                st.image('assets/confusion-matrix-CamemBERT-28.png', width=600)
+       
     if option == 'Images':
         st.header("Modèles d'images")
         st.markdown("Trois architectures CNN testées")
