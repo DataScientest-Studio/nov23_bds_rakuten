@@ -14,20 +14,57 @@ def renderIntroduction():
 
     # Objectig
     st.header('Objectif')
-    st.markdown("""<div style="text-align: justify;">L'objectif du projet est de cataloguer des produits selon un code type désignant le produit.
-                La prédiction du type doit se faire à partir de données textuelles (désignation et description du produit) ainsi que de données 
-                visuelles (image du produit).</div>""", unsafe_allow_html=True)
+    st.markdown("""
+    L'objectif du projet est de cataloguer des produits selon un code type désignant le produit.
+    La prédiction du type doit se faire à partir de données textuelles 
+    (désignation et description du produit) ainsi que de données visuelles (image du produit).
 
-    st.divider()
+    Étant réalisé dans le cadre de la formation Datascientest, 
+    c'était l'opportunité pour nous de découvrir et mettre en application 
+    des techniques de machine learning avancées telles que:
 
-    # Contexte
-    st.header('Contexte')
-    st.markdown(
-        """
-        Ce projet s’inscrit dans le challenge Rakuten France Multimodal Product Data Classification, les données et leur description 
-        sont disponibles à l’adresse : https://challengedata.ens.fr/challenges/35
-        - _Données textuelles : ~60 mb_
-        - _Données images : ~2.2 gb_
-        - _99k données réparties en 27 classes._
-        """
-        )
+    - Computer vision
+    - Réseaux de neurones convolutifs
+    - NLP
+    - Modèles multimodaux
+    - Deep learning
+    """)
+    
+    # equipe
+    st.header('Membres du projet')
+    st.subheader('_Promotion Bootcamp Novembre 2023_')
+
+    with st.container():
+        col1,col2,col3=st.columns(3)
+        with col1:
+            st.image('assets/profile_pic_1.png', width=250)
+            st.header('Julien Noel du Payrat')
+            st.markdown(
+                """
+                - Background de développeur depuis plus de 15 ans
+                - Première expérience en data science
+                - [Linkedin](https://www.linkedin.com/in/julien-noel-du-payrat-01854558/)
+                - [Github](https://github.com/surfncode)
+                """
+                )
+        with col2:
+            st.image('assets/profile_pic_2.png', width=250)
+            st.header('Karim Hadjar')
+            st.markdown(
+                """
+                - Expérience dans la création de tableaux de bord et l'utilisation d'outils (ex: Excel, Power BI)
+                - Approche empirique privilégiée pour l'exploration des données et la sélection des visualisations..
+
+                - [Linkedin](https://www.linkedin.com/in/karim-hadjar-52059b268/)
+                """
+                )
+        with col3:
+            st.image('assets/profile_pic_3.png', width=250)
+            st.header('Mathis Poignet')
+            st.markdown(
+                """
+                - Sorti d'école d'ingénieur, je me spécialise dans le domaine de la data science
+                - Première expérience en data science lors de mon stage d'IUT (segmentation d'image)
+                - [Linkedin](https://www.linkedin.com/in/mathispoignet/)
+                """
+                )
