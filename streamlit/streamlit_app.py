@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
-from tabs import intro, exploration, preprocessing, modelisation, demonstration, about
+from tabs import intro, exploration, preprocessing, modelisation, demonstration
 from prdcodetype2label import prdcodetype2label
 from utils import load_lottiefile, load_models, pull_clean
 
@@ -40,8 +40,11 @@ with st.sidebar:
     '''
     st.markdown(hide_img_fs, unsafe_allow_html=True)
 
-    selected = option_menu('Projet Rakuten', ["Introduction", "Exploration", "Preprocessing", "Modélisation", "Démonstration", "Conclusion", "À propos"], 
-        icons=['play-btn','bar-chart','gear', 'diagram-3', 'play', 'activity', 'info-circle'],menu_icon='collection-play', default_index=0, key='main')
+    selected = option_menu(
+        'Projet Rakuten', 
+        ["Introduction", "Exploration", "Preprocessing", "Modélisation", "Démonstration", "Conclusion"], 
+        icons=['play-btn','bar-chart','gear', 'diagram-3', 'play', 'activity', 'info-circle'],
+        menu_icon='collection-play', default_index=0, key='main')
     
     lottie = load_lottiefile('assets/process.json')
     st_lottie(lottie,key='sidebar', width=250)
@@ -79,8 +82,5 @@ if selected=="Conclusion":
     with col3:
         st.header('Axes d\'amélioration')
 
-# A propos
-if selected=="À propos":
-    about.renderAbout()
 
 
