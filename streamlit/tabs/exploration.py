@@ -27,6 +27,11 @@ def renderExploration(df):
         plt.xlabel('prdtypecode', fontsize=10)
         plt.ylabel('Nombre de produits', fontsize=10)
         st.pyplot(fig)
+        st.markdown("""
+            - 27 classes possibles
+            - Disparités significatives: Certaines classes sous-représentées, 
+            tandis que d'autres sur-représentées
+        """)
 
     if selected2=='Texte':
         with st.expander('Présence de HTML dans le texte'):
@@ -102,6 +107,16 @@ def renderExploration(df):
 
             # Affichage du graphique
             st.pyplot(fig)
+
+            st.markdown("""
+                Proportion de valeurs manquantes dans le champ description: 35%
+
+                Plusieurs options pour les traiter:
+
+                1. Supprimer les lignes les contenant
+                2. Les remplacer par des chaînes de caractères vides ?
+                3. Concaténer les variables designation et description dans une troisième variable
+            """)
 
 
         with st.expander('Fréquence des mots par type de produit'):
