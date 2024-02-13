@@ -49,7 +49,7 @@ def renderExploration(df):
         with st.expander('Aperçu initial'):
             st.header("Aperçu initial")
             st.markdown("""
-            Nous avons chargé le fichier X_train.csv et effectué une première inspection des données.
+            Nous avons chargé le fichier **X_train.csv** et effectué une première inspection des données.
             """)
             st.dataframe(df[['designation', 'description', 'productid', 'imageid']].head().style.format(thousands=''), hide_index=True)
             st.markdown("""
