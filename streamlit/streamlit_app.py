@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
-from tabs import intro, exploration, preprocessing, modelisation, demonstration
+from tabs import intro, exploration, preprocessing, modelisation, demonstration, conclusion
 from prdcodetype2label import prdcodetype2label
 from utils import load_lottiefile, load_models, pull_clean
 
@@ -71,16 +71,7 @@ if selected=='Démonstration':
 
 # Conclusion
 if selected=="Conclusion":
-    st.title('Conclusion')
-    st.divider()
-
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.header('Bilan du projet')
-    with col2:
-        st.header('Difficultées rencontrées')
-    with col3:
-        st.header('Axes d\'amélioration')
+    conclusion.renderConclusion()
 
 
 
