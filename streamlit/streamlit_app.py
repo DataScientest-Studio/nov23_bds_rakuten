@@ -146,46 +146,37 @@ if selected=="Exploration":
         with st.expander('Présence de HTML dans le texte'):
             st.header('Présence de HTML dans le texte')
             with st.container():
-                col1,col2=st.columns(2)
-                with col1:
-                    st.image('assets/html_proportion.png')
-                with col2:
-                    st.markdown("""<div style="text-align: justify;">Beaucoup de textes dans les données ont du HTML, que ce soit avec des
-                                balises comme <b></b> ou des caractères encodés comme &#FA;. On a remarqué
-                                que les descriptions ont plus de HTML que les désignations. Pour simplifier l'
-                                analyse des langues et des mots, on a fait une fonction pour enlever le HTML et 
-                                remplacer les caractères encodés, utilisée sur "designation" et "description".</div>""", unsafe_allow_html=True)
-                st.write(
-                    """<style>
-                    [data-testid="stHorizontalBlock"] {
-                        align-items: center;
-                    }
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
+                st.markdown("""
+                        - En parcourant les données tabulaire, 
+                        nous avons observé un grand nombre de textes contenant du html 
+                        soit sous forme de tags, 
+                        soit sous forme de caractères encodés.
+                        - Dans le but de faciliter l’analyse des langues et de la fréquence des mots, 
+                        nous avons créé une fonction permettant de supprimer le html et 
+                        remplacer les caractères encodés que nous avons appliqué 
+                        aux variables designation et description.
+                """)
+                st.image('assets/html_proportion.png')
         with st.expander('Analyse des langues'):        
             st.header("Analyse des langues")
             with st.container():
-                col1,col2=st.columns([1,2])
-                with col1:
-                    lang_simple = df['lang']
-                    other_langs = df['lang'].value_counts().index[3:]
-                    lang_simple = lang_simple.replace(other_langs, "other")
-                    lang_counts = lang_simple.value_counts()
+                st.markdown("""
+                    - Lors de nos explorations de données, 
+                    nous avons également remarqué la présence de texte dans plusieurs langues, 
+                    principalement en français, anglais et allemand.
+                    - Pour clarifier la situation, nous avons décidé d’utiliser 
+                    la librairie langdetect pour détecter la langue la plus probable 
+                    de chaque texte
+                    - Les modèles NLP étant en général orienté vers une langue particulières, 
+                    nous avons alors envisagé nos options:
+                        - Supprimer les données dans une langue autre que le français
+                        - Traduire toutes les langues vers l’anglais
+                        - Traduire toutes les langues vers le français
 
-                    # Create a pie chart with Matplotlib
-                    fig, ax = plt.subplots()
-                    ax.pie(lang_counts, labels=lang_counts.index, autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+                """)
+                st.image("assets/lang_pie.png")
+                st.image('assets/expl_text_1.png')
 
-                    # Set aspect ratio to be equal
-                    ax.axis('equal')
-
-                    # Display the pie chart
-                    plt.title('Distribution des langues')
-                    st.pyplot(fig)
-                with col2:
-                    st.text('te')
         
         with st.expander('Détection des valeurs manquantes'):
             st.header("Détection des valeurs manquantes")
@@ -226,8 +217,7 @@ if selected=="Exploration":
             # Affichage du graphique
             st.pyplot(fig)
 
-        with st.expander('Répartition des langues par type de produit'):
-            st.image('assets/expl_text_1.png')
+
         with st.expander('Fréquence des mots par type de produit'):
             st.header('Fréquence des mots par type de produit')
             
