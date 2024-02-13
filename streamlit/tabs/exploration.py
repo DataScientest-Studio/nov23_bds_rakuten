@@ -121,8 +121,29 @@ def renderExploration(df):
 
         with st.expander('Fréquence des mots par type de produit'):
             st.header('Fréquence des mots par type de produit')
+
+            st.markdown('Dix mots les plus fréquents dans chaque catégorie')
+            st.image("assets/top-10-words.png")
+            st.markdown("""
+                - Dans la plupart des catégories des mots reflétant leur thème
+                - Certains mots génériques tels que "peut", "plus", "être"
+                - D'autres termes typiques d'un vocabulaire produit, tels que 
+                "dimension", "taille", "longueur"
+                - Des mots classiques du marketing de vente comme "haute", "qualité" et "facile"
+            """)
             
+            st.markdown('Nuages de mots pour chaque catégorie')
+            st.image("assets/world-clouds.png")
+            st.markdown("""
+                - Certains mots plus en arrière-plan qui n'apparaissaient pas dans le top 10
+            """)
 
     if selected2=='Images':
-        st.header('Analyse des contours')
+        st.markdown("""
+            - Beaucoup d'images contiennent une petite image centrale entourée de beaucoup de blanc
+            - Calcul de la bounding box de l'image centrale avec une fonction maison
+            - 20% des images centrales avaient un ratio inférieur à 0.8
+            - Elles pourraient bénéficier d'un zoom
+        """)
         st.image('assets/img_zoom.png')
+
