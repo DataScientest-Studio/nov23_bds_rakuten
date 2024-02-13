@@ -8,30 +8,82 @@ def renderExploration(df):
     st.title('Exploration du jeu de données')
     st.divider()
 
-    selected2 = option_menu(None, ["Données brutes", "Texte", 'Images'], 
+    selected2 = option_menu(None, ["Contexte", "Texte", 'Images'], 
         icons=['database', 'chat-text', "images"], 
         menu_icon="cast", default_index=0, orientation="horizontal")
     
-    if selected2=='Données brutes':
-        st.header("Présentation des données brutes")
-        st.dataframe(df[['designation', 'description', 'productid', 'imageid', 'prdtypecode']].head().style.format(thousands=''), hide_index=True)
+    if selected2=='Contexte':
+        with st.expander('Challenge Rakuten'):
+            st.header("Challenge Rakuten")
+            st.markdown("""
+            Ce projet s’inscrit dans le challenge Rakuten France Multimodal Product Data Classification, 
+            les données et leur description 
+            sont disponibles à l’adresse : https://challengedata.ens.fr/challenges/35
 
-        # Analyse variable cible
-        st.header("Analyse de la variable cible")
+            - _Données textuelles : ~60 mb_
+            - _Données images : ~2.2 gb_
+            - _99k données réparties en 27 classes._
+            """)
 
-        df['categorie'] = df['prdtypecode'].map(prdcodetype2label)
-        fig, ax = plt.subplots(figsize=(15, 3))
-        sns.set(style="whitegrid")
-        sns.countplot(x=df['prdtypecode'], order=df['prdtypecode'].value_counts().index, color='#ff4148')
-        plt.title('Nombre de produits par prdtypecode', fontsize=14)
-        plt.xlabel('prdtypecode', fontsize=10)
-        plt.ylabel('Nombre de produits', fontsize=10)
-        st.pyplot(fig)
-        st.markdown("""
-            - 27 classes possibles
-            - Disparités significatives: Certaines classes sous-représentées, 
-            tandis que d'autres sur-représentées
-        """)
+        with st.expander('Fichiers fournis'):
+            st.header("Fichiers fournis")
+            st.markdown("""
+            - **X_train.csv**: Contient les variables explicatives destinées à l’entraînement des modèles.
+                - **index** (nb entier): Index du produit.
+                - **designation** (object: string): Designation courte du produit
+                - **description** (object: string, optionnel): Description du produit. 
+                Ce champ est optionnel. Tous les produits n'ont pas de description
+                - **productid** (int64): L'id du produit
+                - **imageid** (int64): L'id de l'image du produit
+            - **images.zip**: Une fois extrait, un dossier contenant les images des produits. 
+            La nomenclature utilisée permet de faire la jonction avec les produits. 
+            Chaque fichier d'image se présente sous la forme: image_<imageid>_product_<productid>.jpg. 
+            Les images sont répartis en deux sous-dossiers:
+                - **image_train**: Les images correspondants à **X_train.csv**
+                - **image_test**: Les images correspondants à X_test.csv (pas utilisées)
+            - **Y_train.csv**: Contient la variable cible à prédire. A savoir le type du produit.
+                - **index** (nb entier): Index du produit. Permet de faire la jonction avec X_train.csv
+                - **prdtypecode** (nb entier): Le type du produit
+            """)
+
+        with st.expander('Aperçu initial'):
+            st.header("Aperçu initial")
+            st.markdown("""
+            Nous avons chargé le fichier X_train.csv et effectué une première inspection des données.
+            """)
+            st.dataframe(df[['designation', 'description', 'productid', 'imageid']].head().style.format(thousands=''), hide_index=True)
+            st.markdown("""
+            - Le fichiers contenait 84916 observations
+            - Le champ **description** contenait un grand nombre de valeurs nulles (35%), 
+            ce qui était attendu pour un champ optionnel.
+            - Les autres colonnes ne présentaient pas de valeurs nulles.
+            """)
+
+            # Analyse variable cible
+            st.subheader("Analyse de la variable cible")
+
+            st.markdown("""
+            Nous avons également chargé le fichier **Y_train.csv** et constaté qu'il n'y avait pas 
+            de valeurs manquantes. 
+            Les deux fichiers avaient le même nombre d'entrées, 
+            ce qui indiquait une correspondance totale entre les deux. 
+            Correspondance qui s’est vérifiée lors de la fusion des variables explicatives et la variable cible 
+            dans un DataFrame unique.
+            """)
+
+            df['categorie'] = df['prdtypecode'].map(prdcodetype2label)
+            fig, ax = plt.subplots(figsize=(15, 3))
+            sns.set(style="whitegrid")
+            sns.countplot(x=df['prdtypecode'], order=df['prdtypecode'].value_counts().index, color='#ff4148')
+            plt.title('Nombre de produits par prdtypecode', fontsize=14)
+            plt.xlabel('prdtypecode', fontsize=10)
+            plt.ylabel('Nombre de produits', fontsize=10)
+            st.pyplot(fig)
+            st.markdown("""
+                - 27 classes possibles
+                - Disparités significatives: Certaines classes sous-représentées, 
+                tandis que d'autres sur-représentées
+            """)
 
     if selected2=='Texte':
         with st.expander('Présence de HTML dans le texte'):
