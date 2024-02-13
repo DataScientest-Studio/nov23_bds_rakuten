@@ -348,17 +348,24 @@ if selected=='Modélisation':
 if selected=='Démonstration':
     st.title('Démonstration')
     st.divider()
+
+    option = option_menu(None, ['Texte', 'Images', 'Fusion'], 
+        icons=['chat-text', "images", "file-richtext"], 
+        menu_icon="cast", default_index=0, orientation="horizontal")
+    
     with st.container():
         col1,col2=st.columns([2, 5])
-        with col1:
-            option = st.selectbox(
-                    'Choisir quel modèle utiliser : ',
-                    ('Texte', 'Images', 'Fusion'),
-                    label_visibility='collapsed'
-                )
-            
+        with col1:            
             with st.form('predict_form', clear_on_submit=True):
-
+                option1 = st.selectbox(
+                        'Modèle texte : ',
+                        ('CamenBERT', 'textv2')
+                    )
+                option2 = st.selectbox(
+                        'Modèle image : ',
+                        ('VGG16', 'Resnet152')
+                    )
+            
                 if option in ['Texte', 'Fusion']:
                     designation = st.text_input(
                         "Désignation",
