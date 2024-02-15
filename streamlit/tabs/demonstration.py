@@ -9,23 +9,51 @@ from streamlit_lottie import st_lottie
 from utils import load_lottiefile, get_average_pred
 from utils_camembert import predictCamembert
 
-def renderDemonstration(models):
+#States
+if 'designation_input' not in st.session_state:
+    st.session_state['designation_input'] = ''
+if 'description_input' not in st.session_state:
+    st.session_state['description_input'] = ''
+if 'image_input' not in st.session_state:
+    st.session_state['image_input'] = ''
+if 'scrap_input' not in st.session_state:
+    st.session_state['scrap_input'] = ''
+
+def randomInput(df):
+    product = df.sample()
+    st.session_state['designation_input'] = product.iloc[0]['designation']
+    st.session_state['description_input'] = product.iloc[0]['description']
+    st.session_state['image_input'] = 'image_' + str(product.iloc[0]['imageid']) + '_product_' + str(product.iloc[0]['productid']) + '.jpg'
+
+def clearForm():
+    st.session_state['designation_input'] = ''
+    st.session_state['description_input'] = ''
+    st.session_state['image_input'] = ''
+    st.session_state['scrap_input'] = ''
+
+def renderDemonstration(df, models):
     st.title('Démonstration')
     st.divider()
     
     with st.container():
         col1,col2=st.columns([2, 5])
-        with col1:            
-            with st.form('predict_form', clear_on_submit=False):                
+        with col1:
+            c1, c2 = st.columns(2)
+            with c1:
+                st.button('Aléatoire', use_container_width = True, on_click = lambda: randomInput(df[:10]))
+            with c2:
+                st.button('Effacer', use_container_width = True, on_click = lambda: clearForm())
+            with st.form('predict_form', clear_on_submit=False):
+                print(st.session_state['designation_input'])                
                 designation = st.text_input(
                     "Désignation",
                     placeholder = "Désignation et description du produit",
-                    value='La Guerre Des Tuques'
+                    value=st.session_state['designation_input']
                 )
                 description = st.text_area(
                     "Description",
                     placeholder = "Description du produit",
-                    value="Luc a des idées de grandeur. Il veut organiser un jeu de guerre de boules de neige et s'arranger pour en être le vainqueur incontesté. Mais Sophie s'en mêle et chambarde tous ses plans..."
+                    value = st.session_state['description_input']
                 )
 
                 # rakuten_url = st.text_input("Rakuten URL", placeholder = 'Lien vers produit Rakuten')
@@ -42,25 +70,26 @@ def renderDemonstration(models):
 
         with col2:
             if submitted:
-                if designation or description:
-                    _, text_predictions = predictCamembert(designation + " " + description)
-                if uploaded_file is not None:
-                    image_predictions = np.array(models['vgg16'].predict(uploaded_file)[0])
-                if (designation or description) and uploaded_file is not None:
-                    predictions = get_average_pred(image_predictions, text_predictions)
-                else:
-                    try:
-                        image_predictions
-                    except NameError:
-                        print('Image not defined')
-                    else: 
-                        predictions = image_predictions
-                    try:
-                        text_predictions
-                    except NameError:
-                        print('Text not defined')
+                with st.spinner('Classification en cours, veuillez patienter....'):
+                    if designation or description:
+                        _, text_predictions = predictCamembert(designation + " " + description)
+                    if uploaded_file is not None:
+                        image_predictions = np.array(models['vgg16'].predict(uploaded_file)[0])
+                    if (designation or description) and uploaded_file is not None:
+                        predictions = get_average_pred(image_predictions, text_predictions)
                     else:
-                        predictions = text_predictions[0]
+                        try:
+                            image_predictions
+                        except NameError:
+                            print('Image not defined')
+                        else: 
+                            predictions = image_predictions
+                        try:
+                            text_predictions
+                        except NameError:
+                            print('Text not defined')
+                        else:
+                            predictions = text_predictions[0]
                 
                 try: 
                     predictions
@@ -76,7 +105,7 @@ def renderDemonstration(models):
                     ax.bar(*zip(*sorted_predictions[:10]), color='#ff4148')
                     ax.set_title('Prédictions par catégorie', fontsize=16)
                     ax.set_ylabel('Probabilités', fontsize=14)
-                    plt.xticks(rotation=90)
+                    plt.xticks(rotation=40)
                     st.pyplot(fig)
 
                     categorie, taux_de_confiance = sorted_predictions[0]

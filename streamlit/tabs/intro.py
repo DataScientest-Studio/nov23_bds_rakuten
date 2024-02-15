@@ -11,48 +11,9 @@ def renderIntroduction():
         st.image('assets/mines.png', width=210)
     with c4:
         st.image('assets/datascientest.png', width=100)
-    st.divider()
-
-     # Membres
-    st.header('Promotion Bootcamp Novembre 2023')
-    col1,col2,col3=st.columns(3)
-    with col1:
-        st.image('assets/profile_pic_1.png', width=180)
-        st.header('Julien Noel du Payrat')
-        st.markdown(
-            """
-            - Background de développeur depuis plus de 15 ans
-            - Première expérience en data science
-            - [Linkedin](https://www.linkedin.com/in/julien-noel-du-payrat-01854558/)
-            - [Github](https://github.com/surfncode)
-            """
-            )
-    with col2:
-        st.image('assets/profile_pic_2.png', width=180)
-        st.header('Karim Hadjar')
-        st.markdown(
-            """
-            - Expérience dans la création de tableaux de bord et l'utilisation d'outils (ex: Excel, Power BI)
-            - Approche empirique privilégiée pour l'exploration des données et la sélection des visualisations..
-
-            - [Linkedin](https://www.linkedin.com/in/karim-hadjar-52059b268/)
-            """
-            )
-    with col3:
-        st.image('assets/profile_pic_3.png', width=180)
-        st.header('Mathis Poignet')
-        st.markdown(
-            """
-            - Sorti d'école d'ingénieur, je me spécialise dans le domaine de la data science
-            - Première expérience en data science lors de mon stage d'IUT (segmentation d'image)
-            - [Linkedin](https://www.linkedin.com/in/mathispoignet/)
-            """
-            )
-    
-    st.divider()
+    st.divider()        
 
     # Objectif
-
     st.header('Objectif')
     st.markdown("""
     L'objectif du projet est de cataloguer des produits selon un code type désignant le produit.
@@ -70,7 +31,7 @@ def renderIntroduction():
     - Deep learning
     """)
     
-    # equipe
+    # Membres
     st.header('Membres du projet')
     st.subheader('_Promotion Bootcamp Novembre 2023_')
 

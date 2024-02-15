@@ -61,9 +61,9 @@ if selected=='Preprocessing':
 # Modélisation
 if selected=='Modélisation':
     modelisation.renderModelisation()
-    
+
 if selected=='Démonstration':
-    demonstration.renderDemonstration(models)
+    demonstration.renderDemonstration(df, models)
 
 # Conclusion
 if selected=="Conclusion":
