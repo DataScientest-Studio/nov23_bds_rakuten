@@ -9,7 +9,6 @@ from streamlit_lottie import st_lottie
 from utils import load_lottiefile, get_average_pred
 from utils_camembert import predictCamembert
 
-#States
 if 'designation_input' not in st.session_state:
     st.session_state['designation_input'] = ''
 if 'description_input' not in st.session_state:
@@ -21,6 +20,7 @@ if 'scrap_input' not in st.session_state:
 
 def randomInput(df):
     product = df.sample()
+    print(product)
     st.session_state['designation_input'] = product.iloc[0]['designation']
     st.session_state['description_input'] = product.iloc[0]['description']
     st.session_state['image_input'] = 'image_' + str(product.iloc[0]['imageid']) + '_product_' + str(product.iloc[0]['productid']) + '.jpg'
@@ -57,6 +57,8 @@ def renderDemonstration(df, models):
                 )
 
                 # rakuten_url = st.text_input("Rakuten URL", placeholder = 'Lien vers produit Rakuten')
+                
+                uploaded_file = st.session_state['image_input']
 
                 uploaded_file = st.file_uploader("Importer une image", type=['png', 'jpg'])
                 if uploaded_file is not None:
@@ -65,6 +67,7 @@ def renderDemonstration(df, models):
                     image = image.resize((224, 224))
                     img_array = np.asarray(image)
                     uploaded_file = img_array.reshape((1, 224, 224, 3))
+                    st.image(uploaded_file)
                 
                 submitted = st.form_submit_button('Prédire', use_container_width=True)
 
