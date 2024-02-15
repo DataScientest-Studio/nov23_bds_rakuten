@@ -137,3 +137,4 @@ dmypy.json
 .vscode/
 streamlit/.DS_Store
 streamlit/assets/.DS_Store
+streamlit/models/.DS_Store

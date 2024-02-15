@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 import pandas as pd
-from keras.models import load_model
+import keras
 
 @st.cache_data
 def load_lottiefile(filepath: str):
@@ -14,7 +14,11 @@ def pull_clean():
 
 @st.cache_resource
 def load_models():
-    model = {}
+    models = {}
     with open('models/vgg16.keras', 'rb') as file:
-        model['vgg16'] = load_model(file.name, compile=False)
-    return model
+        models['vgg16'] = keras.models.load_model(file.name, compile=False)
+    return models
+
+def get_average_pred(img_pred,text_pred,img_pred_weight=0.5,text_pred_weight=0.5):
+  combined_pred = (img_pred * img_pred_weight) + (text_pred * text_pred_weight)
+  return combined_pred[0]

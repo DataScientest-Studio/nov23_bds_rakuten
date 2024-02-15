@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 from tabs import intro, exploration, preprocessing, modelisation, demonstration, conclusion
 from prdcodetype2label import prdcodetype2label
-from utils import load_lottiefile, load_models, pull_clean
+from utils import load_lottiefile, pull_clean, load_models
 
 #Layout
 st.set_page_config(
@@ -20,8 +20,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-models = load_models()
 df = pull_clean()
+models = load_models()
 
 #Options Menu
 with st.sidebar:
@@ -40,11 +40,8 @@ with st.sidebar:
     '''
     st.markdown(hide_img_fs, unsafe_allow_html=True)
 
-    selected = option_menu(
-        'Projet Rakuten', 
-        ["Introduction", "Exploration", "Preprocessing", "Modélisation", "Démonstration", "Conclusion"], 
-        icons=['play-btn','bar-chart','gear', 'diagram-3', 'play', 'activity', 'info-circle'],
-        menu_icon='collection-play', default_index=0, key='main')
+    selected = option_menu('Projet Rakuten', ["Introduction", "Exploration", "Preprocessing", "Modélisation", "Démonstration", "Conclusion"], 
+        icons=['play-btn','bar-chart','gear', 'diagram-3', 'play', 'activity'],menu_icon='collection-play', default_index=0, key='main')
     
     lottie = load_lottiefile('assets/process.json')
     st_lottie(lottie,key='sidebar', width=250)
@@ -55,7 +52,6 @@ if selected=="Introduction":
 
 # Exploration
 if selected=="Exploration":
-
    exploration.renderExploration(df)
 
 # Preprocessing
@@ -65,9 +61,9 @@ if selected=='Preprocessing':
 # Modélisation
 if selected=='Modélisation':
     modelisation.renderModelisation()
+    
 if selected=='Démonstration':
-    demonstration.renderDemonstration()
-
+    demonstration.renderDemonstration(models)
 
 # Conclusion
 if selected=="Conclusion":
