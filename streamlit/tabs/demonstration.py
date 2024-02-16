@@ -7,9 +7,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from streamlit_lottie import st_lottie 
 from utils import load_lottiefile, get_average_pred
-from utils_camembert import predictCamembert
+import utils_camembert
+import utils_vgg16
 from scrapper import scrap
 import requests
+import numpy as np
+import pandas as pd
+
 
 if 'designation_input' not in st.session_state:
     st.session_state['designation_input'] = ''
@@ -24,12 +28,19 @@ if 'scrap_input' not in st.session_state:
 if 'image_url' not in st.session_state:
     st.session_state['image_url'] = ''
 
-def randomInput(df):
+@st.cache_data
+def load_streamlit_df():
+    return pd.read_csv("demo_data/df_streamlit_subset.csv",index_col=0)
+
+def randomInput():
+    df = load_streamlit_df()
+    # df = df[(df["prediction_correct_image"]==True) & (df["prediction_correct_text"]==True)]
     product = df.sample()
-    st.session_state['designation_input'] = str(product.iloc[0]['designation'])
-    st.session_state['description_input'] = str(product.iloc[0]['description'])
+    st.session_state['designation_input'] = ''
+    st.session_state['description_input'] = str(product.iloc[0]['text_fr'])
     st.session_state['class_input'] = prdcodetype2label[product.iloc[0]['prdtypecode']]
-    st.session_state['image_input'] = 'image_' + str(product.iloc[0]['imageid']) + '_product_' + str(product.iloc[0]['productid']) + '.jpg'
+    print("image_file=",product.iloc[0]['imagefile'])
+    st.session_state['image_input'] = product.iloc[0]['imagefile']
     st.session_state['scrap_input'] = ''
 
 def clearForm():
@@ -41,16 +52,19 @@ def clearForm():
     st.session_state['image_url'] = ''
 
 
-def renderDemonstration(df, models):
+def renderDemonstration():
+    # speed loading of app by loading models just now
+    utils_camembert.init()
+    utils_vgg16.init()
     st.title('Démonstration')
     st.divider()
-    
+
     with st.container():
         col1,col2=st.columns([2, 5])
         with col1:
             c1, c2 = st.columns(2)
             with c1:
-                st.button('Aléatoire', use_container_width = True, on_click = lambda: randomInput(df[:10]))
+                st.button('Aléatoire', use_container_width = True, on_click = lambda: randomInput())
             with c2:
                 st.button('Effacer', use_container_width = True, on_click = lambda: clearForm())
             text_weight = st.slider('Ajuster le poids du modèle texte', 0.0, 1.0, 0.5, 0.01, label_visibility='collapsed')
@@ -94,13 +108,17 @@ def renderDemonstration(df, models):
                             designation, description, image_url = None, None, None
                             st.text('Impossible de charger l\'URL')
                     if designation or description:
-                        _, text_predictions = predictCamembert(designation + " " + description)
+                        text_predictions = utils_camembert.predict(designation + " " + description)
+                        # print("text_prediction=",
+                        #         prdcodetype2label[utils_camembert.classes_order[np.argmax(text_predictions)]] )
                     if uploaded_file is not None:
                         uploaded_file.load()
                         img_resized = uploaded_file.resize((224, 224))
                         img_array = np.asarray(img_resized)
-                        image = img_array.reshape((1, 224, 224, 3))
-                        image_predictions = np.array(models['vgg16'].predict(image)[0])
+                        image = img_array.reshape((224, 224, 3))
+                        image_predictions = utils_vgg16.predict(image,utils_camembert.classes_order)
+                        # print("image_prediction=",
+                        #         prdcodetype2label[utils_camembert.classes_order[np.argmax(image_predictions)]] )
                     if (designation or description) and uploaded_file is not None:
                         predictions = get_average_pred(image_predictions, text_predictions, text_weight)
                     else:
@@ -122,7 +140,9 @@ def renderDemonstration(df, models):
                 except NameError:
                     st.text('No predictions found')
                 else:
-                    class_predictions = list(zip(prdcodetype2label.values(), predictions))
+                    class_labels = [prdcodetype2label[class_label] \
+                        for class_label in utils_camembert.classes_order ]
+                    class_predictions = list(zip(class_labels, predictions))
 
                     # Trier les prédictions par probabilité (du plus élevé au plus bas)
                     sorted_predictions = sorted(class_predictions, key=lambda x: x[1], reverse=True)

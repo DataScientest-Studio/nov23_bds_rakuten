@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 from tabs import intro, exploration, preprocessing, modelisation, demonstration, conclusion
 from prdcodetype2label import prdcodetype2label
-from utils import load_lottiefile, pull_clean, load_models
+from utils import load_lottiefile, pull_clean
 
 #Layout
 st.set_page_config(
@@ -21,7 +21,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 df = pull_clean()
-models = load_models()
 
 #Options Menu
 with st.sidebar:
@@ -63,7 +62,7 @@ if selected=='Modélisation':
     modelisation.renderModelisation()
 
 if selected=='Démonstration':
-    demonstration.renderDemonstration(df, models)
+    demonstration.renderDemonstration()
 
 # Conclusion
 if selected=="Conclusion":
