@@ -9,7 +9,7 @@ prdcodetype2label = {
     1280 : "Jouet enfant, déguisement",
     1281 : "Jeu de société",
     1300 : "Jouet tech",
-    1301 : "Paire de chaussettes",
+    1301 : "Jeu intérieur/Chaussettes",
     1302 : "Jeu extérieur, vêtement",
     1320 : "Autour du bébé",
     1560 : "Mobilier intérieur",
