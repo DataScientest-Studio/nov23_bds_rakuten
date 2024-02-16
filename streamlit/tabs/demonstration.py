@@ -53,6 +53,8 @@ def renderDemonstration(df, models):
                 st.button('Aléatoire', use_container_width = True, on_click = lambda: randomInput(df[:10]))
             with c2:
                 st.button('Effacer', use_container_width = True, on_click = lambda: clearForm())
+            text_weight = st.slider('Ajuster le poids du modèle texte', 0.0, 1.0, 0.5, 0.01, label_visibility='collapsed')
+            st.write(f"Poids Camembert: {text_weight:.2f} - Poids VGG16: {1 - text_weight:.2f}")
             with st.form('predict_form', clear_on_submit=False):       
                 designation = st.text_input(
                     "Désignation",
@@ -100,7 +102,7 @@ def renderDemonstration(df, models):
                         image = img_array.reshape((1, 224, 224, 3))
                         image_predictions = np.array(models['vgg16'].predict(image)[0])
                     if (designation or description) and uploaded_file is not None:
-                        predictions = get_average_pred(image_predictions, text_predictions)
+                        predictions = get_average_pred(image_predictions, text_predictions, text_weight)
                     else:
                         try:
                             image_predictions
