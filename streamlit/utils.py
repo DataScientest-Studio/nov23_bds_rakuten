@@ -19,6 +19,6 @@ def load_models():
         models['vgg16'] = keras.models.load_model(file.name, compile=False)
     return models
 
-def get_average_pred(img_pred,text_pred,img_pred_weight=0.5,text_pred_weight=0.5):
+def get_average_pred(img_pred,text_pred,img_pred_weight=0.3,text_pred_weight=0.6):
   combined_pred = (img_pred * img_pred_weight) + (text_pred * text_pred_weight)
   return combined_pred[0]

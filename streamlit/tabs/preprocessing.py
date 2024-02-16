@@ -9,7 +9,7 @@ def renderPreprocessing():
         icons=['chat-text', "images","database"], 
         menu_icon="cast", default_index=0, orientation="horizontal")
 
-    
+
     if selected3=="Texte":
         st.header('Préparation du texte')
         
@@ -69,7 +69,7 @@ def renderPreprocessing():
             - Zoom des images centrales ayant un ratio inférieur ou égal à 80%
         """)
         st.image("assets/zoom_images.png")
-
+    
     if selected3=="Rééquilibrage des classes":
         st.header("Rééquilibrage des classes")
         st.markdown("""
@@ -89,4 +89,3 @@ def renderPreprocessing():
             jusqu'à ce qu'elles atteignent toutes environ 4000 observations, 
             représentant la population des classes moyennement peuplées du dataset.
         """)
-
