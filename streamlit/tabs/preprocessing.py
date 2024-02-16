@@ -5,7 +5,7 @@ def renderPreprocessing():
     st.title('Démarche de préprocessing')
     st.divider()
 
-    selected3 = option_menu(None, ["Texte", 'Images',"Rééquilibrage des classes"], 
+    selected3 = option_menu(None, ["Texte", 'Images',"Équilibrage des classes"], 
         icons=['chat-text', "images","database"], 
         menu_icon="cast", default_index=0, orientation="horizontal")
 
@@ -70,10 +70,10 @@ def renderPreprocessing():
         """)
         st.image("assets/zoom_images.png")
     
-    if selected3=="Rééquilibrage des classes":
-        st.header("Rééquilibrage des classes")
+    if selected3=="Équilibrage des classes":
+        st.header("Équilibrage des classes")
         st.markdown("""
-            Pour le rééquilibrage des données, 
+            Pour le équilibrage des données, 
             suite à la traduction et au preprocessing des images, 
             nous avons scindé les données en trois ensembles : 
             un ensemble d'entraînement (80% des données), 
