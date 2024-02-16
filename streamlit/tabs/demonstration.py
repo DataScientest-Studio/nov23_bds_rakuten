@@ -109,16 +109,16 @@ def renderDemonstration():
                             st.text('Impossible de charger l\'URL')
                     if designation or description:
                         text_predictions = utils_camembert.predict(designation + " " + description)
-                        # print("text_prediction=",
-                        #         prdcodetype2label[utils_camembert.classes_order[np.argmax(text_predictions)]] )
+                        print("text_prediction=",
+                                prdcodetype2label[utils_camembert.classes_order[np.argmax(text_predictions)]] )
                     if uploaded_file is not None:
                         uploaded_file.load()
                         img_resized = uploaded_file.resize((224, 224))
                         img_array = np.asarray(img_resized)
                         image = img_array.reshape((224, 224, 3))
                         image_predictions = utils_vgg16.predict(image,utils_camembert.classes_order)
-                        # print("image_prediction=",
-                        #         prdcodetype2label[utils_camembert.classes_order[np.argmax(image_predictions)]] )
+                        print("image_prediction=",
+                                prdcodetype2label[utils_camembert.classes_order[np.argmax(image_predictions)]] )
                     if (designation or description) and uploaded_file is not None:
                         predictions = get_average_pred(image_predictions, text_predictions, text_weight)
                     else:
