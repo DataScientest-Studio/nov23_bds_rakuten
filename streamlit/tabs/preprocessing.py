@@ -5,10 +5,11 @@ def renderPreprocessing():
     st.title('Démarche de préprocessing')
     st.divider()
 
-    selected3 = option_menu(None, ["Texte", 'Images'], 
-        icons=['chat-text', "images"], 
+    selected3 = option_menu(None, ["Texte", 'Images',"Rééquilibrage des classes"], 
+        icons=['chat-text', "images","database"], 
         menu_icon="cast", default_index=0, orientation="horizontal")
 
+    
     if selected3=="Texte":
         st.header('Préparation du texte')
         
@@ -68,3 +69,24 @@ def renderPreprocessing():
             - Zoom des images centrales ayant un ratio inférieur ou égal à 80%
         """)
         st.image("assets/zoom_images.png")
+
+    if selected3=="Rééquilibrage des classes":
+        st.header("Rééquilibrage des classes")
+        st.markdown("""
+            Pour le rééquilibrage des données, 
+            suite à la traduction et au preprocessing des images, 
+            nous avons scindé les données en trois ensembles : 
+            un ensemble d'entraînement (80% des données), 
+            un ensemble de validation (10% des données), 
+            et un ensemble de test (10% des données). 
+            
+            Nous avons veillé à respecter la répartition initiale des classes 
+            dans chaque ensemble.
+            
+            Pour rééquilibrer les classes de l’ensemble d'entraînement, 
+            nous avons réduit le nombre d'observations dans la classe majoritaire 
+            et augmenté le nombre d'occurrences des classes minoritaires 
+            jusqu'à ce qu'elles atteignent toutes environ 4000 observations, 
+            représentant la population des classes moyennement peuplées du dataset.
+        """)
+
