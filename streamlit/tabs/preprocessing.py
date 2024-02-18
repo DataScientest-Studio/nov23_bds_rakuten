@@ -16,11 +16,8 @@ def renderPreprocessing():
         with st.expander('Techniques de préparation du texte'):
             #st.header('Préparation du texte')
             st.markdown("""
-                **Préparation du texte**  
-                Application de techniques statistiques et d'apprentissage machine traditionnel pour la classification de texte, avec une préparation spécifique du texte.
-
                 **1. Nettoyage du Texte:**  
-                Suppression des balises Html, de la ponctuation.
+                Suppression des balises Html, de la ponctuation. Traduction.
 
                 **2. Tokenisation:**  
                 Division du texte en mots ou phrases (tokens) pour faciliter leur traitement.
