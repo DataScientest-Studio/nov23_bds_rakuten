@@ -37,7 +37,13 @@ def randomInput():
     # df = df[(df["prediction_correct_image"]==True) & (df["prediction_correct_text"]==True)]
     product = df.sample()
     st.session_state['designation_input'] = str(product.iloc[0]['designation'])
-    st.session_state['description_input'] = str(product.iloc[0]['description'])
+
+    if pd.isna(product.iloc[0]['description']):
+        description = ''
+    else:
+        description = str(product.iloc[0]['description'])
+    st.session_state['description_input'] =  description
+    
     st.session_state['class_input'] = prdcodetype2label[product.iloc[0]['prdtypecode']]
     print("image_file =",product.iloc[0]['imagefile'])
     st.session_state['image_input'] = product.iloc[0]['imagefile']
