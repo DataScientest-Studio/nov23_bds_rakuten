@@ -43,7 +43,7 @@ def randomInput():
     else:
         description = str(product.iloc[0]['description'])
     st.session_state['description_input'] =  description
-    
+
     st.session_state['class_input'] = prdcodetype2label[product.iloc[0]['prdtypecode']]
     print("image_file =",product.iloc[0]['imagefile'])
     st.session_state['image_input'] = product.iloc[0]['imagefile']
@@ -119,29 +119,29 @@ def renderDemonstration():
                             st.text('Impossible de charger l\'URL')
                     if designation or description:
                         text_predictions = utils_camembert.predict(designation + " " + description)
-                        print("text_prediction=",
-                                prdcodetype2label[utils_camembert.classes_order[np.argmax(text_predictions)]] )
                     if uploaded_file is not None:
                         uploaded_file.load()
                         img_resized = uploaded_file.resize((224, 224))
                         img_array = np.asarray(img_resized)
                         image = img_array.reshape((224, 224, 3))
                         image_predictions = utils_vgg16.predict(image,utils_camembert.classes_order)
-                        print("image_prediction=",
-                                prdcodetype2label[utils_camembert.classes_order[np.argmax(image_predictions)]] )
                     if (designation or description) and uploaded_file is not None:
                         predictions = get_average_pred(image_predictions, text_predictions, text_weight)
+                        fusion_prediction_index = np.argmax(predictions) 
                     else:
+                        fusion_prediction_index = None
                         try:
                             image_predictions
                         except NameError:
                             print('Image not defined')
+                            image_predictions = None
                         else: 
                             predictions = image_predictions
                         try:
                             text_predictions
                         except NameError:
                             print('Text not defined')
+                            text_predictions = None
                         else:
                             predictions = text_predictions
                 
@@ -175,9 +175,29 @@ def renderDemonstration():
                     col1, col2 = st.columns(2)
                     with col1:
                         st.markdown(prediction_markdown, unsafe_allow_html=True)
+                        prediction_detail = ''
+                        if not (text_predictions is None):
+                            prediction_detail += format_model_prediction_class_detail(
+                                text_predictions,"texte",fusion_prediction_index)
+                        if not (image_predictions is None):
+                            prediction_detail += format_model_prediction_class_detail(
+                                image_predictions,"image",fusion_prediction_index)
+                        if len(prediction_detail) != 0:
+                            st.markdown(prediction_detail)
+
                         if st.session_state['class_input'] != '':
                             st.markdown(class_markdown, unsafe_allow_html=True)
+
                         st.markdown(rate_markdown, unsafe_allow_html=True)
+                        rate_detail = ''
+                        if not (text_predictions is None):
+                            rate_detail += format_model_prediction_rate_detail(
+                                text_predictions,"texte",fusion_prediction_index)
+                        if not (image_predictions is None):
+                            rate_detail += format_model_prediction_rate_detail(
+                                image_predictions,"image",fusion_prediction_index)
+                        if len(rate_detail) != 0:
+                            st.markdown(rate_detail)
                     with col2:
                         if uploaded_file is not None:
                             st.image(uploaded_file, width=200)
@@ -187,3 +207,21 @@ def renderDemonstration():
                 with c2:
                     lottie = load_lottiefile('assets/dashboard.json')
                     st_lottie(lottie,key='demo', width=600)
+
+def format_model_prediction_class_detail(model_predictions,image_or_text,fusion_prediction_index=None):
+    model_prediction_index = np.argmax(model_predictions)
+    model_prediction = prdcodetype2label[
+        utils_camembert.classes_order[model_prediction_index]
+    ]
+    prediction_detail = f"- **Prédiction {image_or_text}** : {model_prediction}"
+    if model_prediction_index != fusion_prediction_index and not (fusion_prediction_index is None):
+        prediction_detail += f" (**{model_predictions[model_prediction_index]:.2%}**)"
+    prediction_detail += "\n"
+    return prediction_detail
+
+def format_model_prediction_rate_detail(model_predictions,image_or_text,fusion_prediction_index=None):
+    if fusion_prediction_index is None:
+        prediction_index = np.argmax(model_predictions)
+    else:
+        prediction_index = fusion_prediction_index
+    return f"- **{image_or_text}** : {model_predictions[prediction_index]:.2%}\n"
