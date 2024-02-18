@@ -36,10 +36,10 @@ def randomInput():
     df = load_streamlit_df()
     # df = df[(df["prediction_correct_image"]==True) & (df["prediction_correct_text"]==True)]
     product = df.sample()
-    st.session_state['designation_input'] = ''
-    st.session_state['description_input'] = str(product.iloc[0]['text_fr'])
+    st.session_state['designation_input'] = str(product.iloc[0]['designation'])
+    st.session_state['description_input'] = str(product.iloc[0]['description'])
     st.session_state['class_input'] = prdcodetype2label[product.iloc[0]['prdtypecode']]
-    print("image_file=",product.iloc[0]['imagefile'])
+    print("image_file =",product.iloc[0]['imagefile'])
     st.session_state['image_input'] = product.iloc[0]['imagefile']
     st.session_state['scrap_input'] = ''
 
@@ -68,7 +68,7 @@ def renderDemonstration():
             with c2:
                 st.button('Effacer', use_container_width = True, on_click = lambda: clearForm())
             text_weight = st.slider('Ajuster le poids du modèle texte', 0.0, 1.0, 0.5, 0.01, label_visibility='collapsed')
-            st.write(f"Poids Camembert: {text_weight:.2f} - Poids VGG16: {1 - text_weight:.2f}")
+            st.write(f"Poids CamemBERT: {text_weight:.2f} - Poids VGG16: {1 - text_weight:.2f}")
             with st.form('predict_form', clear_on_submit=False):       
                 designation = st.text_input(
                     "Désignation",
@@ -85,21 +85,25 @@ def renderDemonstration():
 
                 rakuten_url = st.text_input(
                     "Rakuten URL", 
-                    placeholder = 'Lien vers produit Rakuten',
-                    value = st.session_state['scrap_input'],
+                    placeholder = 'Lien vers produit Rakuten',                   
                     key='scrap_input'
                 )
 
                 uploaded_file = st.file_uploader("Importer une image", type=['png', 'jpg'])
                 if uploaded_file is not None:
                     uploaded_file = Image.open(uploaded_file)
+                if st.session_state['image_input']:
+                    uploaded_file = Image.open('demo_data/images/' + st.session_state['image_input'])
                 
                 submitted = st.form_submit_button('Prédire', use_container_width=True)
 
         with col2:
             if submitted:
+                print(rakuten_url)
                 with st.spinner('Classification en cours, veuillez patienter....'):
                     if rakuten_url:
+                        print('rakuten')
+                        st.session_state['class_input'] = ''
                         try:
                             designation, description, image_url = scrap(rakuten_url)
                             print(image_url)

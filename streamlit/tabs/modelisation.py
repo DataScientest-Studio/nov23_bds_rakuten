@@ -143,10 +143,19 @@ def renderModelisation():
 
         with st.expander('Modèle d\'image ResNet152'):
             st.header('Modèle d\'image ResNet152')
-            st.subheader('Rapport de classification')
-            st.image('assets/cf_resnet.png', width=400)
-            st.subheader('Matrice de confusion')
-            st.image('assets/heatmap_resnet.png')
+            st.markdown("""
+                Dans le but d'améliorer les performances de notre modèle, nous avons utilisé 
+                la méthode de transfert learning avec, comme architecture de détection de caractéristiques,
+                le modèle ResNet152 avec auquel nous avons rajouté plusieurs couches de classifications permettant
+                ainsi de répondre à notre besoin initial.
+            """)
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                st.subheader('Rapport de classification')
+                st.image('assets/cf_resnet.png', width=400)
+            with col2:
+                st.subheader('Matrice de confusion')
+                st.image('assets/heatmap_resnet.png', width=800)
 
         with st.expander('Modèle d\'image VGG16'):
             st.header('Modèle d\'image VGG16')
