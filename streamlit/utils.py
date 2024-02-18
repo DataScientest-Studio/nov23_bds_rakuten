@@ -16,4 +16,4 @@ def pull_clean():
 def get_average_pred(img_pred,text_pred, text_pred_weight =  0.5):
   img_pred_weight = 1 - text_pred_weight
   combined_pred = (img_pred * img_pred_weight) + (text_pred * text_pred_weight)
-  return combined_pred[0]
+  return combined_pred

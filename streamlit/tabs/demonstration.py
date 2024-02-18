@@ -133,7 +133,7 @@ def renderDemonstration():
                         except NameError:
                             print('Text not defined')
                         else:
-                            predictions = text_predictions[0]
+                            predictions = text_predictions
                 
                 try: 
                     predictions

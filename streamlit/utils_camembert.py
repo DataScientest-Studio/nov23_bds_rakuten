@@ -50,5 +50,5 @@ def predict(text):
         probabilities = torch.softmax(predictions.logits, dim=1)
 
 
-    return probabilities.cpu().numpy()  # S'assurer que les probabilités sont aussi sur CPU
+    return probabilities.cpu().numpy()[0]  # S'assurer que les probabilités sont aussi sur CPU
 
