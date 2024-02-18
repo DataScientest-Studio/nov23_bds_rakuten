@@ -197,5 +197,7 @@ def renderExploration(df):
             - 20% des images centrales avaient un ratio inférieur à 0.8
             - Elles pourraient bénéficier d'un zoom
         """)
-        st.image('assets/img_zoom.png')
+        c1, c2, c3 = st.columns([1, 2, 1])
+        with c2:
+            st.image('assets/img_zoom.png')
 

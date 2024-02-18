@@ -11,7 +11,7 @@ def renderModelisation():
     
     if option == 'Texte':
         st.header('Modèle de classification de texte')
-        st.markdown("Etude en 3 phases")
+        st.subheader("*Étude en 3 phases*")
         with st.expander('Phase 1 : Modèles Classiques'):
             st.header('Modèles Classiques')
             st.markdown("""
@@ -113,7 +113,7 @@ def renderModelisation():
        
     if option == 'Images':
         st.header("Modèles d'images")
-        st.markdown("Trois architectures CNN testées")
+        st.subheader("*Trois architectures CNN testées*")
         with st.expander('Modèle d\'image LeNet'):
             st.header('Modèle d\'image LeNet')
             st.markdown("""
@@ -147,7 +147,10 @@ def renderModelisation():
                 Dans le but d'améliorer les performances de notre modèle, nous avons utilisé 
                 la méthode de transfert learning avec, comme architecture de détection de caractéristiques,
                 le modèle ResNet152 avec auquel nous avons rajouté plusieurs couches de classifications permettant
-                ainsi de répondre à notre besoin initial.
+                ainsi de répondre à notre besoin initial. Nous avons testé différents hyper-paramètres en se basant sur
+                les tests précédemment faits sur le modèle LeNet. Ensuite, nous avons tenté de réduire l'overfitting au maximum
+                en essayant plusieurs couches de classifications différentes. Enfin, nous sommes arrivés à weighted-f1 score de 0.58
+                avec une bonne généralisation malgré certaines lacunes dans quelques catégories.
             """)
             col1, col2 = st.columns([1, 2])
             with col1:
@@ -185,15 +188,18 @@ def renderModelisation():
             qui a atteint un f1-score de 0.60.
             """)
 
-            st.markdown("""
-                #### Rapport de classification
-            """)
-            st.image("assets/classification-report-vgg16.png")
-
-            st.markdown("""
-                #### Matrice de confusion
-            """)
-            st.image("assets/confusion-matrix-vgg16.png")
+            c1, c2 = st.columns([1, 2])
+            with c1:
+                st.markdown("""
+                    #### Rapport de classification
+                """)
+                st.image("assets/classification-report-vgg16.png", width=400)
+            
+            with c2:
+                st.markdown("""
+                    #### Matrice de confusion
+                """)
+                st.image("assets/confusion-matrix-vgg16.png")
     if option == 'Fusion':
         st.header("Fusion des modèles de texte et d’image")
         st.markdown("""
@@ -217,14 +223,16 @@ def renderModelisation():
         Nous avons obtenu les meilleurs résultats avec le modèle de l’étape 3 (id 431) 
         qui a atteint un f1-score de 0.8907.
         """)
-
-        st.markdown("""
-            #### Rapport de classification
-        """)
-        st.image("assets/classification-report-fusion.png")
-
-        st.markdown("""
-            #### Matrice de confusion
-        """)
-        st.image("assets/confusion-matrix-fusion.png")
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            st.markdown("""
+                #### Rapport de classification
+            """)
+            st.image("assets/classification-report-fusion.png", width=400)
+        
+        with c2:
+            st.markdown("""
+                #### Matrice de confusion
+            """)
+            st.image("assets/confusion-matrix-fusion.png")
         

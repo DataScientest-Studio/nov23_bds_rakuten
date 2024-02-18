@@ -17,6 +17,9 @@ st.markdown("""
 .big-font {
     font-size:80px !important;
 }
+[data-testid='stAppViewBlockContainer']{
+            padding: 3rem 5rem 2rem 5rem;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -33,7 +36,7 @@ with st.sidebar:
         visibility: hidden;}*/
     .st-emotion-cache-eczf16 {display: none}
     [data-testid='stSidebarUserContent']{
-        padding: 4rem 1.5rem 2rem 1.5rem
+        padding: 4rem 1.5rem 2rem 1.5rem;
     }
     </style>
     '''

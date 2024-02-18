@@ -1,6 +1,4 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-import tensorflow as tf
 from PIL import Image
 from prdcodetype2label import prdcodetype2label
 import numpy as np
@@ -172,7 +170,7 @@ def renderDemonstration():
                     rate_markdown = f"<h3 style='font-size:1.6em;'>Taux de confiance : <strong style='color:#ff4148;'>{taux_de_confiance:.2%}</strong> </h3>"
 
                     # Affichage du texte en Markdown avec Streamlit
-                    col1, col2 = st.columns(2)
+                    col1, col2, col3 = st.columns([3, 2, 2])
                     with col1:
                         st.markdown(prediction_markdown, unsafe_allow_html=True)
                         prediction_detail = ''
@@ -188,17 +186,19 @@ def renderDemonstration():
                         if st.session_state['class_input'] != '':
                             st.markdown(class_markdown, unsafe_allow_html=True)
 
+                    with col2:
                         st.markdown(rate_markdown, unsafe_allow_html=True)
                         rate_detail = ''
                         if not (text_predictions is None):
                             rate_detail += format_model_prediction_rate_detail(
-                                text_predictions,"texte",fusion_prediction_index)
+                                text_predictions,"Texte",fusion_prediction_index)
                         if not (image_predictions is None):
                             rate_detail += format_model_prediction_rate_detail(
-                                image_predictions,"image",fusion_prediction_index)
+                                image_predictions,"Image",fusion_prediction_index)
                         if len(rate_detail) != 0:
                             st.markdown(rate_detail)
-                    with col2:
+
+                    with col3:
                         if uploaded_file is not None:
                             st.image(uploaded_file, width=200)
 
