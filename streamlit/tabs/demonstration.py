@@ -31,7 +31,7 @@ def load_streamlit_df():
     return pd.read_csv("demo_data/df_streamlit_subset.csv",index_col=0)
 
 def randomInput():
-    df = load_streamlit_df()
+    df = load_streamlit_df()[:6]
     # df = df[(df["prediction_correct_image"]==True) & (df["prediction_correct_text"]==True)]
     product = df.sample()
     st.session_state['designation_input'] = str(product.iloc[0]['designation'])

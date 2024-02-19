@@ -23,6 +23,7 @@ def renderExploration(df):
             - _Données textuelles : ~60 mb_
             - _Données images : ~2.2 gb_
             - _99k données réparties en 27 classes._
+            - _Métrique cible: weighted-f1 score_
             """)
 
         with st.expander('Fichiers fournis'):
@@ -80,9 +81,9 @@ def renderExploration(df):
             plt.ylabel('Nombre de produits', fontsize=10)
             st.pyplot(fig)
             st.markdown("""
-                - 27 classes possibles
-                - Disparités significatives: Certaines classes sous-représentées, 
-                tandis que d'autres sur-représentées
+                - 27 classes possibles (labellisées avec un dictionnaire)
+                - Disparités significatives: Certaines classes sous-représentées (60: Console de jeu), 
+                tandis que d'autres sur-représentées (2583: Autour de la piscine)
             """)
 
     if selected2=='Texte':

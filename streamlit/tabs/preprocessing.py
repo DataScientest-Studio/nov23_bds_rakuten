@@ -16,8 +16,9 @@ def renderPreprocessing():
         with st.expander('Techniques de préparation du texte'):
             #st.header('Préparation du texte')
             st.markdown("""
-                **1. Nettoyage du Texte:**  
-                Suppression des balises Html, de la ponctuation. Traduction.
+                **1. Nettoyage et préparation du Texte:**  
+                - Suppression des balises HTML, de la ponctuation.
+                - Traduction en français.
 
                 **2. Tokenisation:**  
                 Division du texte en mots ou phrases (tokens) pour faciliter leur traitement.

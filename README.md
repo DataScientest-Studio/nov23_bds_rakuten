@@ -12,7 +12,7 @@ This project was developed by the following team :
 
 - Julien Noel du Payrat ([GitHub](https://github.com/surfncode) / [LinkedIn](https://www.linkedin.com/in/jundp/))
 - Karim Hadjar ([LinkedIn](https://www.linkedin.com/in/karim-hadjar-52059b268/))
-- Mathis Poignet
+- Mathis Poignet ([LinkedIn](https://www.linkedin.com/in/mathispoignet/))
 
 ## Architecture
 
