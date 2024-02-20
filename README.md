@@ -26,6 +26,7 @@ We have organized the git repository as follows:
     - **data_preprocessing_resampling:** Class rebalancing.
     - **Data-preprocessing-text-stopWord-Steming:** Stop words filtering, text tokenization, and lemmatization.
     - **data-modeling-images-1:** Image modeling with LeNet.
+    - **data-modeling-images-2:** Image modeling with ResNet152.
     - **data-modeling-images-3:** Image modeling with VGG16.
     - **data-modeling-text-1-TF-IDF:** Text modeling with TF-IDF.
     - **data-modeling-text-1bis-TF-IDF:** Continuation of text modeling with TF-IDF.
@@ -36,11 +37,14 @@ We have organized the git repository as follows:
     - **data-modeling-text-6-CamenBERT:** Text modeling with Camembert.
     - **data-modeling-text-6 retrain-CamenBERT:** Continuation of text modeling with Camembert.
     - **data-modeling-fusion:** Fusion of text and image models.
+    - **data-modeling-interpretation-images**: Late addition of activation maximization technique to interpret results of VGG16 best model .
+    - **streamlit-data-preparation**: Late addition of code to prepare a data subset for streamlit demo
 - **output:** Contains the results of the notebooks, each in a subfolder named identically to the corresponding notebook.
 - **assets:** Contains some image resources used by the notebooks.
 - **reports:** Contains this report in PDF format.
+- **streamlit:** Contains the streamlit demo
 
-## Running
+## Running the notebooks
 
 We made some efforts to allow running the notebooks both locally and on google colab. However, due to a lack of proper hardware on our personal computers, we were not able to fully test the notebooks which needed a dedicated hardware (GPU).
 
@@ -64,4 +68,17 @@ pip install -r requirements.txt
 ```
 
 You're all setup. You should now be able to open the notebooks. If you plan to re-run them, please be mindful of the order indicated in the section **Architecture**
+
+## Running the streamlit demo
+
+1. The models were too big to store on git. You must download them separately, and extract them into **streamlit/models**. Here is the public download link located on our google drive: [models.zip](https://drive.google.com/file/d/1mvkmmFL5efTv60xwsZkpRmnywUzmCCcR/view?usp=sharing).
+
+2. Next, type the following commands in a terminal, preferably in a virtual environment like venv or conda (starting from root of git repo):
+```bash
+cd streamlit
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+That's it, you should now have the url of streamlit app (http://localhost:8501/) opened in your default browser !
+
 
